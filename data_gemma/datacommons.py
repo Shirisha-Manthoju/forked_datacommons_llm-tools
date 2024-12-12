@@ -30,13 +30,13 @@ _BASE_URL = 'http://localhost:8080/core/api/v2/observation'
 # http://localhost:8080/core/api/v2/observation?entity.dcids=country%2FCAN&select=entity&select=variable&select=value&select=date&variable.dcids=average_annual_wage
 
 _POINT_MODE = 'toolformer_rig'
-_TABLE_MODE = 'toolformer_rag'
+# _TABLE_MODE = 'toolformer_rag'
 
 # Do not allow topics, use higher threshold (0.8).
 _POINT_PARAMS = f'allCharts=1&mode={_POINT_MODE}&idx=base_uae_mem'
 
 # Allow topics, use lower threshold (0.7).
-_TABLE_PARAMS = f'mode={_TABLE_MODE}&client=table&idx=base_uae_mem'
+# _TABLE_PARAMS = f'mode={_TABLE_MODE}&client=table&idx=base_uae_mem'
 
 
 class DataCommons:
@@ -44,7 +44,7 @@ class DataCommons:
 
   def __init__(
       self,
-      api_key: str,
+      # api_key: str,
       verbose: bool = True,
       num_threads: int = 1,
       env: str = 'nl',
@@ -53,7 +53,7 @@ class DataCommons:
     self.options = base.Options(verbose=verbose)
     self.num_threads = num_threads
     self.env = env
-    self.api_key = api_key
+    # self.api_key = api_key
     if not session:
       session = requests.Session()
     self.session = session
@@ -103,51 +103,51 @@ class DataCommons:
         score=score,
     )
 
-  def table(self, query: str) -> base.DataCommonsCall:
-    """Calls Data Commons API."""
+  # def table(self, query: str) -> base.DataCommonsCall:
+  #   """Calls Data Commons API."""
 
-    self.options.vlog(f'... calling DC for table with "{query}"')
-    response = self._call_api(query, _TABLE_PARAMS)
-    # Get the first chart.
-    charts = response.get('charts')
-    if not charts:
-      return base.DataCommonsCall(query=query)
-    chart = charts[0]
+  #   self.options.vlog(f'... calling DC for table with "{query}"')
+  #   response = self._call_api(query, _TABLE_PARAMS)
+  #   # Get the first chart.
+  #   charts = response.get('charts')
+  #   if not charts:
+  #     return base.DataCommonsCall(query=query)
+  #   chart = charts[0]
 
-    data_csv = chart.get('data_csv', '')
-    rows = list(csv.reader(io.StringIO(data_csv)))
-    if not data_csv or not rows:
-      return base.DataCommonsCall(query=query)
+  #   data_csv = chart.get('data_csv', '')
+  #   rows = list(csv.reader(io.StringIO(data_csv)))
+  #   if not data_csv or not rows:
+  #     return base.DataCommonsCall(query=query)
 
-    u = chart.get('unit', '')
-    s = _src(chart)
-    t = chart.get('title', '')
+  #   u = chart.get('unit', '')
+  #   s = _src(chart)
+  #   t = chart.get('title', '')
 
-    parts = []
-    parts.append(' | '.join(rows[0]))
-    parts.append('-' * len(parts[-1]))
-    for row in rows[1:]:
-      row = [utils.round_float(v) for v in row]
-      parts.append(' | '.join(row))
-    parts.append('\n')
-    table_str = '\n'.join(parts)
+  #   parts = []
+  #   parts.append(' | '.join(rows[0]))
+  #   parts.append('-' * len(parts[-1]))
+  #   for row in rows[1:]:
+  #     row = [utils.round_float(v) for v in row]
+  #     parts.append(' | '.join(row))
+  #   parts.append('\n')
+  #   table_str = '\n'.join(parts)
 
-    svm = response.get('debug', {}).get('debug', {}).get('sv_matching', {})
-    score = svm.get('CosineScore', [-1])[0]
-    var = svm.get('SV', [''])[0]
-    url = chart.get('dcUrl', '')
-    if url:
-      url += f'&mode={_TABLE_MODE}'
-    return base.DataCommonsCall(
-        query=query,
-        unit=u,
-        title=t,
-        src=s,
-        table=table_str,
-        url=url,
-        var=var,
-        score=score,
-    )
+  #   svm = response.get('debug', {}).get('debug', {}).get('sv_matching', {})
+  #   score = svm.get('CosineScore', [-1])[0]
+  #   var = svm.get('SV', [''])[0]
+  #   url = chart.get('dcUrl', '')
+  #   if url:
+  #     url += f'&mode={_TABLE_MODE}'
+  #   return base.DataCommonsCall(
+  #       query=query,
+  #       unit=u,
+  #       title=t,
+  #       src=s,
+  #       table=table_str,
+  #       url=url,
+  #       var=var,
+  #       score=score,
+  #   )
 
   def calln(
       self, queries: list[str], func: Callable[[str], base.DataCommonsCall]
@@ -171,8 +171,8 @@ class DataCommons:
   def _call_api(self, query: str, extra_params: str) -> Any:
     query = query.strip().replace(' ', '+')
     url = _BASE_URL.format(env=self.env) + f'?&q={query}&{extra_params}'
-    if self.api_key:
-      url = f'{url}&key={self.api_key}'
+    # if self.api_key:
+      # url = f'{url}&key={self.api_key}'
     print(f'DC: Calling {url}')
     print(f'user query: {query}')
     print(f'Extra_Params : {extra_params}')
