@@ -59,6 +59,8 @@ class DataCommons:
 
     self.options.vlog(f'... calling DC with "{query}"')
     response = self._call_api(query, _POINT_PARAMS)
+    print(f"Data Commons Response : {response}")
+    print(f'')
     # Get the first LINE chart.
     chart = None
     for c in response.get('charts', []):
@@ -85,6 +87,7 @@ class DataCommons:
     url = chart.get('dcUrl', '')
     if url:
       url += f'&mode={_POINT_MODE}'
+    print(f"URL {url}")
     return base.DataCommonsCall(
         query=query,
         val=v,
