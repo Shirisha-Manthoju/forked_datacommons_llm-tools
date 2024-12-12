@@ -167,7 +167,9 @@ class DataCommons:
     url = _BASE_URL.format(env=self.env) + f'?&q={query}&{extra_params}'
     if self.api_key:
       url = f'{url}&key={self.api_key}'
-    # print(f'DC: Calling {url}')
+    print(f'DC: Calling {url}')
+    print(f'user query: {query}')
+    print(f'Extra_Params : {extra_params}')
     return self.session.get(url).json()
 
 
