@@ -14,7 +14,7 @@
 
 """Basic Flow."""
 
-from data_gemma import base
+from dev.data_gemma import base
 
 
 class BaselineFlow(base.Flow):

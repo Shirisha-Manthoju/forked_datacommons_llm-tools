@@ -20,8 +20,8 @@ from typing import Any, Callable
 
 import requests
 
-from data_gemma import base
-from data_gemma import utils
+from dev.data_gemma import base
+from dev.data_gemma import utils
 
 # _BASE_URL = 'https://{env}.datacommons.org/nodejs/query'
 

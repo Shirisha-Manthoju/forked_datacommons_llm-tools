@@ -17,7 +17,7 @@ import logging
 import time
 from typing import Any
 
-from data_gemma import base
+from dev.data_gemma import base
 
 MAX_NEW_TOKENS = 4096
 

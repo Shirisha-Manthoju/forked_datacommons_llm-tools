@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from data_gemma import base
-from data_gemma import baseline
-from data_gemma import datacommons
-from data_gemma import google_api
-from data_gemma import huggingface_api
-from data_gemma import openai_api
-from data_gemma import rag
-from data_gemma import rig
+from dev.data_gemma import base
+from dev.data_gemma import baseline
+from dev.data_gemma import datacommons
+from dev.data_gemma import google_api
+from dev.data_gemma import huggingface_api
+from dev.data_gemma import openai_api
+from dev.data_gemma import rag
+from dev.data_gemma import rig
 
 # LLM related classes.
 LLM = base.LLM

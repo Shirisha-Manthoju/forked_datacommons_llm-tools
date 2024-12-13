@@ -17,10 +17,10 @@
 import logging
 import time
 
-from data_gemma import base
-from data_gemma import datacommons
-from data_gemma import prompts
-from data_gemma import validate
+from dev.data_gemma import base
+from dev.data_gemma import datacommons
+from dev.data_gemma import prompts
+from dev.data_gemma import validate
 
 _MAX_QUESTIONS = 25
 

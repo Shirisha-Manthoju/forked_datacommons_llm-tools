@@ -21,7 +21,7 @@ from typing import Any
 
 import requests
 
-from data_gemma import base
+from dev.data_gemma import base
 
 
 class OpenAI(base.LLM):
