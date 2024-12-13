@@ -26,14 +26,14 @@ from dev.data_gemma import utils
 # _BASE_URL = 'https://{env}.datacommons.org/nodejs/query'
 
 _BASE_URL = 'http://localhost:8080/core/api/v2/observation'
-
+# http://localhost:8080/explore#q=annual+average+wage+i+italy&client=ui_query
 # http://localhost:8080/core/api/v2/observation?entity.dcids=country%2FCAN&select=entity&select=variable&select=value&select=date&variable.dcids=average_annual_wage
 
 _POINT_MODE = 'toolformer_rig'
 # _TABLE_MODE = 'toolformer_rag'
 
 # Do not allow topics, use higher threshold (0.8).
-_POINT_PARAMS = f'allCharts=1&mode={_POINT_MODE}&idx=base_uae_mem'
+# _POINT_PARAMS = f'allCharts=1&mode={_POINT_MODE}&idx=base_uae_mem'
 
 # Allow topics, use lower threshold (0.7).
 # _TABLE_PARAMS = f'mode={_TABLE_MODE}&client=table&idx=base_uae_mem'
@@ -62,7 +62,8 @@ class DataCommons:
     """Calls Data Commons API."""
 
     self.options.vlog(f'... calling DC with "{query}"')
-    response = self._call_api(query, _POINT_PARAMS)
+    # response = self._call_api(query, _POINT_PARAMS)
+    response = self._call_api(query)
     print(f"Data Commons Response : {response}")
     # Get the first LINE chart.
     chart = None
