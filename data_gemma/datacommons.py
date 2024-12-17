@@ -29,7 +29,7 @@ _BASE_URL = 'http://localhost:8080/core/api/v2/observation'
 # http://localhost:8080/explore#q=annual+average+wage+i+italy&client=ui_query
 # http://localhost:8080/core/api/v2/observation?entity.dcids=country%2FCAN&select=entity&select=variable&select=value&select=date&variable.dcids=average_annual_wage
 
-_POINT_MODE = 'toolformer_rig'
+# _POINT_MODE = 'toolformer_rig'
 # _TABLE_MODE = 'toolformer_rag'
 
 # Do not allow topics, use higher threshold (0.8).
@@ -64,7 +64,8 @@ class DataCommons:
     self.options.vlog(f'... calling DC with "{query}"')
     # response = self._call_api(query, _POINT_PARAMS)
     response = self._call_api(query)
-    print(f"Data Commons Response : {response}")
+    self.options.vlog(f'...calling data commons response: {response} ')
+    # print(f"Data Commons Response : {response}")
     # Get the first LINE chart.
     chart = None
     for c in response.get('charts', []):
@@ -88,10 +89,10 @@ class DataCommons:
     svm = response.get('debug', {}).get('debug', {}).get('sv_matching', {})
     score = svm.get('CosineScore', [-1])[0]
     var = svm.get('SV', [''])[0]
-    url = chart.get('dcUrl', '')
-    if url:
-      url += f'&mode={_POINT_MODE}'
-    print(f"URL {url}")
+    # url = chart.get('dcUrl', '')
+    # if url:
+      # url += f'&mode={_POINT_MODE}'
+    # print(f"URL {url}")
     return base.DataCommonsCall(
         query=query,
         val=v,
@@ -99,7 +100,7 @@ class DataCommons:
         title=t,
         date=d,
         src=s,
-        url=url,
+        # url=url,
         var=var,
         score=score,
     )
