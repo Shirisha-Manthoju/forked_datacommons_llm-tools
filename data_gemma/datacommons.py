@@ -31,11 +31,11 @@ _BASE_URL = 'http://localhost:8080/api/observations/point?entities=country/ITA&v
 # http://localhost:8080/explore#q=annual+average+wage+i+italy&client=ui_query
 # http://localhost:8080/core/api/v2/observation?entity.dcids=country%2FCAN&select=entity&select=variable&select=value&select=date&variable.dcids=average_annual_wage
 
-_POINT_MODE = 'toolformer_rig'
+# _POINT_MODE = 'toolformer_rig'
 # _TABLE_MODE = 'toolformer_rag'
 
 # Do not allow topics, use higher threshold (0.8).
-_POINT_PARAMS = f'allCharts=1&mode={_POINT_MODE}&idx=base_uae_mem'
+# _POINT_PARAMS = f'allCharts=1&mode={_POINT_MODE}&idx=base_uae_mem'
 
 # Allow topics, use lower threshold (0.7).
 # _TABLE_PARAMS = f'mode={_TABLE_MODE}&client=table&idx=base_uae_mem'
@@ -64,8 +64,8 @@ class DataCommons:
     """Calls Data Commons API."""
 
     self.options.vlog(f'... calling DC with "{query}"')
-    response = self._call_api(query, _POINT_PARAMS)
-    # response = self._call_api(query)
+    # response = self._call_api(query, _POINT_PARAMS)
+    response = self._call_api(query)
     self.options.vlog(f'...calling data commons response: {response} ')
     print(f"Data Commons Response : {response}")
     # Get the first LINE chart.
@@ -91,10 +91,10 @@ class DataCommons:
     svm = response.get('debug', {}).get('debug', {}).get('sv_matching', {})
     score = svm.get('CosineScore', [-1])[0]
     var = svm.get('SV', [''])[0]
-    url = chart.get('dcUrl', '')
-    if url:
-      url += f'&mode={_POINT_MODE}'
-    print(f"URL {url}")
+    # url = chart.get('dcUrl', '')
+    # if url:
+      # url += f'&mode={_POINT_MODE}'
+    # print(f"URL {url}")
     return base.DataCommonsCall(
         query=query,
         val=v,
@@ -102,7 +102,7 @@ class DataCommons:
         title=t,
         date=d,
         src=s,
-        url=url,
+        # url=url,
         var=var,
         score=score,
     )
@@ -171,16 +171,29 @@ class DataCommons:
       r.id = i + 1
       q2resp[q] = r
     return q2resp
-
-  def _call_api(self, query: str, extra_params: str) -> Any:
+  
+  def _call_api(self, query: str) -> Any:
     query = query.strip().replace(' ', '+')
-    url = _BASE_URL.format(env=self.env) + f'?&q={query}&{extra_params}'
+    # url = _BASE_URL.format(env=self.env) + f'?&q={query}&{extra_params}'
+    url = _BASE_URL.format(env=self.env)
     # if self.api_key:
       # url = f'{url}&key={self.api_key}'
     print(f'DC: Calling {url}')
     print(f'user query: {query}')
-    print(f'Extra_Params : {extra_params}')
+    # print(f'Extra_Params : {extra_params}')
     return self.session.get(url).json()
+
+
+  # def _call_api(self, query: str, extra_params: str) -> Any:
+  #   query = query.strip().replace(' ', '+')
+  #   # url = _BASE_URL.format(env=self.env) + f'?&q={query}&{extra_params}'
+  #   url = _BASE_URL.format(env=self.env)
+  #   # if self.api_key:
+  #     # url = f'{url}&key={self.api_key}'
+  #   print(f'DC: Calling {url}')
+  #   print(f'user query: {query}')
+  #   print(f'Extra_Params : {extra_params}')
+  #   return self.session.get(url).json()
 
 
 def _src(chart: dict[str, Any]) -> str:
