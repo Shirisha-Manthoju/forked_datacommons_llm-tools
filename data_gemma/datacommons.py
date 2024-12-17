@@ -26,7 +26,7 @@ from dev.data_gemma import utils
 # _BASE_URL = 'https://{env}.datacommons.org/nodejs/query'
 
 # _BASE_URL = 'http://localhost:8080/core/api/v2/observation'
-_BASE_URL = 'http://localhost:8080/core/api/observations/point?entities=country/ITA&variables=average_annual_wage'
+_BASE_URL = 'http://localhost:8080/api/observations/point?entities=country/ITA&variables=average_annual_wage'
 
 # http://localhost:8080/explore#q=annual+average+wage+i+italy&client=ui_query
 # http://localhost:8080/core/api/v2/observation?entity.dcids=country%2FCAN&select=entity&select=variable&select=value&select=date&variable.dcids=average_annual_wage
